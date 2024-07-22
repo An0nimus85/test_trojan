@@ -1,5 +1,4 @@
 
-
 [
-    {"module": "meterpreter_module"}
+    {"module": "test_module"}
 ]
